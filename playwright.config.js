@@ -1,21 +1,19 @@
 // @ts-check
-import { defineConfig, devices } from '@playwright/test';
-// Environment variable se name extract karein (default 'prod' rakha hai)
-const currentEnv = process.env.ENV || 'prod';
+const { defineConfig, devices } = require('@playwright/test');
 
-// Dynamic file load karne ke liye
-const envConfig = require(`./config/env.${currentEnv}.js`).default;
-/**
- * @see https://playwright.dev/docs/test-configuration
- */
-export default defineConfig({
-  testDir: './tests',
+const currentEnv = process.env.ENV || 'prod';
+const envConfig = require(`./config/env.${currentEnv}.js`);
+
+module.exports = defineConfig({
+  testDir: './testdata', // Exact folder name: test
+  testMatch: '**/*.spec.js',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
+    baseURL: envConfig.baseURL,
     trace: 'on-first-retry',
   },
   projects: [
@@ -23,16 +21,5 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
   ],
 });
-
