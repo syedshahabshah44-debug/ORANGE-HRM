@@ -7,8 +7,8 @@ class LoginPage {
   // Target URL navigate karne ke liye
   async navigateToPage() {
     await this.page.goto(envConfig.baseURL, { 
-      waitUntil: 'domcontentloaded',
-      timeout: 30000 
+      /*waitUntil: 'domcontentloaded',
+      timeout: 30000 */
     });
   }
 
