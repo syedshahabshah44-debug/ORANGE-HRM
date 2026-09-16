@@ -1,17 +1,10 @@
 const { test } = require('@playwright/test');
-const { LoginPage } = require('../PageObjects/LoginPage');
-
+const { LoginPage } = require('../PageObjects/LoginPage');/*object distruction*/
 test.describe('OrangeHRM Visit Page Test', () => {
-
-  test('Visit production login page', async ({ page }) => {
-    test.setTimeout(60000); // 60s timeout limit
-
+  test('Visit production login page', async ({ page }) => {/* ye page parameter ha jo k b hamary test ko  browser tab ko hand over krta ha phir us me chalta ha*/
+    test.setTimeout(60000); 
     const loginPage = new LoginPage(page);
-
-    // Step 1: Visit target URL
     await loginPage.navigateToPage();
-
-    // Step 2: Verify page title
     await loginPage.verifyPageVisited();
   });
 
